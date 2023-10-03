@@ -3,6 +3,7 @@ package com.andres.learnspringboot3wei.artifact.controller;
 import com.andres.learnspringboot3wei.artifact.exception.ArtifactNotFoundException;
 import com.andres.learnspringboot3wei.artifact.model.Artifact;
 import com.andres.learnspringboot3wei.artifact.service.ArtifactService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +76,6 @@ class ArtifactControllerTest {
 
     }
 
-
     @Test
     void testFindArtifactByIdNotFound() throws Exception {
         //Given
@@ -87,6 +87,36 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.code").value(404))
                 .andExpect(jsonPath("$.message").value("Resource not found"))
                 .andExpect(jsonPath("$.data").isEmpty());
+    }
 
+    @Test
+    void testFindAllArtifacts() throws Exception {
+        //Given
+        given(this.artifactService.findAll()).willReturn(this.artifactList);
+
+        //When and then
+        this.mockMvc.perform(get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(Boolean.TRUE))
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.message").value("OK"))
+                .andExpect(jsonPath("$.data[0].id").value("1"))
+                .andExpect(jsonPath("$.data[0].name").value("test"));
+    }
+
+    @Test
+    void testFindAllArtifactsSuccess() throws Exception {
+        //Given
+        given(this.artifactService.findAll()).willReturn(this.artifactList);
+
+        //When
+        this.mockMvc.perform(get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(Boolean.TRUE))
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.message").value("OK"))
+                .andExpect(jsonPath("$.data", Matchers.hasSize(this.artifactList.size())))
+                .andExpect(jsonPath("$.data[0].id").value("1"))
+                .andExpect(jsonPath("$.data[0].name").value("test"))
+                .andExpect(jsonPath("$.data[1].id").value("2"))
+                .andExpect(jsonPath("$.data[1].name").value("test"));
     }
 }

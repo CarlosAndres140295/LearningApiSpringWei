@@ -1,9 +1,7 @@
 package com.andres.learnspringboot3wei.artifact.model;
 
 
-import com.andres.learnspringboot3wei.wizard.Wizard;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.andres.learnspringboot3wei.wizard.model.Wizard;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.andres.learnspringboot3wei.wizard;
+package com.andres.learnspringboot3wei.wizard.model;
 
 import com.andres.learnspringboot3wei.artifact.model.Artifact;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,4 +28,8 @@ public class Wizard implements Serializable {
                 cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonBackReference
     private List<Artifact> artifacts;
+
+    public Integer getNumberOfArtifacts() {
+        return this.artifacts.size();
+    }
 }

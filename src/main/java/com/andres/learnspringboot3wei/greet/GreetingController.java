@@ -1,4 +1,4 @@
-package com.andres.learnspringboot3wei.controller;
+package com.andres.learnspringboot3wei.greet;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
